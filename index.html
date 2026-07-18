@@ -2,14 +2,20 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>ORT – System</title>
+<title>ORT – Systemindex</title>
+
 <style>
 body { background:#000; color:#0f0; font-family:monospace; padding:20px; }
-h1, h2 { color:#6cf; }
-a { color:#6cf; display:block; margin:10px 0; }
+h1 { color:#6cf; }
+h2 { color:#4cf; margin-top:30px; }
+a { color:#6cf; text-decoration:none; }
+a:hover { text-decoration:underline; }
+ul { list-style:none; padding:0; }
+li { padding:4px 0; border-bottom:1px solid #222; }
 pre { background:#111; border:1px solid #333; padding:10px; }
 </style>
 </head>
+
 <body>
 
 <h1>ORT – Systemkern</h1>
@@ -21,16 +27,55 @@ FREQ = 12e
 360° = aktiv
 </pre>
 
-<h2>Dateien</h2>
-<a href="./core.axm">core.axm</a>
-<a href="./ORT.respo">ORT.respo</a>
-<a href="./ORT.html">ORT – Geometrie</a>
-<a href="./Freq.html">Frequenz</a>
-<a href="./ID.html">Identität</a>
-<a href="./mer.html">Merge</a>
-<a href="./wie.html">Mechanik</a>
-<a href="./im.html">Visual</a>
-<a href="./bore.html">Börse</a>
+<h2>System‑Module</h2>
+<ul>
+  <li><a href="./core.axm">core.axm</a></li>
+  <li><a href="./ORT.respo">ORT.respo</a></li>
+  <li><a href="./ORT.html">ORT – Geometrie</a></li>
+  <li><a href="./Freq.html">Frequenz</a></li>
+  <li><a href="./ID.html">Identität</a></li>
+  <li><a href="./mer.html">Merge</a></li>
+  <li><a href="./wie.html">Mechanik</a></li>
+  <li><a href="./im.html">Visual</a></li>
+  <li><a href="./bore.html">Börse</a></li>
+</ul>
+
+<h2>Struktur‑Ordner (U → Q → T → H → B)</h2>
+
+<div id="folders"></div>
+
+<script>
+const scanOrder = ["U", "Q", "T", "H", "B"];
+
+async function scanFolder(folder) {
+  try {
+    const res = await fetch(folder + "/");
+    if (!res.ok) return;
+
+    const html = await res.text();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+    const links = [...doc.querySelectorAll("a")];
+
+    const section = document.createElement("div");
+    section.innerHTML = `<h2>${folder}</h2><ul></ul>`;
+    const ul = section.querySelector("ul");
+
+    links.forEach(link => {
+      const name = link.textContent.trim();
+      if (name !== "../") {
+        const li = document.createElement("li");
+        li.innerHTML = `<a href="${folder}/${link.getAttribute("href")}">${name}</a>`;
+        ul.appendChild(li);
+      }
+    });
+
+    document.getElementById("folders").appendChild(section);
+  } catch (e) {}
+}
+
+scanOrder.forEach(scanFolder);
+</script>
 
 </body>
 </html>
