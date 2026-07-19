@@ -1,0 +1,11 @@
+HOME_SCORE = 
+(BEN * 0.1) +
+(ZOOM * 0.2) +
+(ORT * 0.3) +
+(HOME * 0.4) +
+(5D + 6D + 7D)
+
+WINNER_CODE = SHA256(HOME_SCORE + Kandidat_Name)
+WINNER_NAME = Kandidat_Name
+WINNER_SCORE = HOME_SCORE
+WINNER_STORY = "Ergebnis basierend auf allen HOME‑Dimensionen."
