@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>ORT · INDEX · Tech-Panel · NC² · 6D · 12e · Markt</title>
+<title>ORT · INDEX · RESPO · NC² · 6D · 12e · Markt</title>
 
 <style>
   body { background:#000; color:#00ffff; font-family:Consolas; padding:20px; }
@@ -51,7 +51,7 @@ function sumCSV(txt){
     .reduce((a,b)=>a+b,0);
 }
 
-// Vektor
+// NC² / 6D / 12e Vektor
 function vector(content){
   return {
     NC2: content.length,
@@ -85,10 +85,20 @@ function wert(sum){
 
 async function start(){
 
+  // neue ORT-Dateien + alte RESPO-Dateien
   const FILES = [
+    "ORT.respo",
+    "ORT.html",
+    "ort.room",
+    "ADD.room",
+    "Q.room",
+    "T.room",
+    "STATIONEN.raw",
     "12e allin allout.room",
     "6D‑Baum.raw",
     "6E → 6D.tech",
+
+    // NC²
     "NC²",
     "NC² (1)",
     "NC²octa².dual",
@@ -98,9 +108,8 @@ async function start(){
     "NC²□.lock",
     "NC²□.sync",
     "NC²□octa³.align",
-    "Q.room",
-    "STATIONEN.raw",
-    "T.room",
+
+    // Level-Pyramiden
     "level-pyramiden-7.csv",
     "level-pyramiden-7 (1).csv",
     "level-pyramiden-7 (2).csv",
@@ -109,8 +118,43 @@ async function start(){
     "level-pyramiden-7 (5).csv",
     "level-pyramiden-7 (6).csv",
     "level-pyramiden-7 (7).csv",
-    "ADD.room",
-    "ORT.respo"
+
+    // tmp-Module
+    "RESPO_ARG_SCAN.tmp",
+    "SCHACH.tmp",
+    "arg.tmp",
+    "bauer.tmp",
+    "c.tmp",
+    "dame.tmp",
+    "edit.tmp",
+    "error.tmp",
+    "fit.tmp",
+    "help.tmp",
+    "in.tmp",
+    "morph.tmp",
+    "nord.tmp",
+    "octa.tmp",
+    "operator.tmp",
+    "ost.tmp",
+    "pferd.tmp",
+    "q.tmp",
+    "schachac.tmp",
+    "score.tmp",
+    "skat.tmp",
+    "sued.tmp",
+    "tetriz.tmp",
+    "tmp.a",
+    "tmp.e",
+    "tmp.g",
+    "tmp.h",
+    "tmp.o",
+    "tmp.po.raer.tmp",
+    "tmp.s",
+    "up.tmp",
+    "west.tmp",
+    "x.tmp",
+    "xarg.tmp",
+    "z.tmp"
   ];
 
   const out = document.getElementById("out");
@@ -160,7 +204,7 @@ Wertbildung: ${wert(sum7)}
 
 <body onload="start()">
 
-<h1>ORT · INDEX · Tech-Panel</h1>
+<h1>ORT · INDEX · RESPO · NC² · 6D · 12e</h1>
 
 <div id="out"></div>
 
