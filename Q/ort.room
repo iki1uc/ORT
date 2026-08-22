@@ -1,1 +1,38 @@
+{
+  "room.id": "ORT",
+  "room.level": 3,
+  "room.type": "meta",
+  "room.state": "active",
+
+  "room.vector": {
+    "NC2": 128,
+    "6D": 14,
+    "DYN": 9,
+    "ZEN": "stabil",
+    "SURE": 2,
+    "GEO": "TRANS",
+    "RESPO": "synthesis"
+  },
+
+  "room.sync": {
+    "arg": "arg.tmp",
+    "scan": "RESPO_ARG_SCAN.tmp",
+    "matrix": "SCHACH.tmp",
+    "mode": "aligned",
+    "lock": true
+  },
+
+  "room.sources": [
+    "bauer.tmp",
+    "dame.tmp",
+    "pferd.tmp",
+    "tetriz.tmp",
+    "operator.tmp",
+    "octa.tmp",
+    "xarg.tmp",
+    "schachac.tmp"
+  ],
+
+  "room.final": "ORT.room → RESPO.synthesis · GEO.TRANS · ARG.sync"
+}
 
