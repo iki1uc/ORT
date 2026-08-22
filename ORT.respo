@@ -1,26 +1,43 @@
-# ORT.respo – Target-Layer
+{
+  "ORT.respo": {
+    "id": "ORT",
+    "layer": "Q",
+    "type": "target",
+    "state": "active",
 
-ORT = /ORT/
+    "compat": {
+      "ROOT": "TMP",
+      "ACHSE": "TMP",
+      "TMP": "TMP",
+      "LAGE": "TMP",
+      "laTER": "TMP",
+      "ORT": "TMP"
+    },
 
-# Kompatibilität
-ROOT.compat  = TMP
-ACHSE.compat = TMP
-TMP.compat   = TMP
-LAGE.compat  = TMP
-laTER.compat = TMP
-ORT.compat   = TMP
+    "freq": {
+      "value": "FREQ.12",
+      "hz": 12,
+      "mode": "stable"
+    },
 
-# Frequenz
-FREQ = FREQ.12
+    "6D": {
+      "D0": "ROOT",
+      "D1": "ACHSE",
+      "D2": "TMP",
+      "D3": "LAGE",
+      "D4": "laTER",
+      "D5": "ORT",
+      "mapping": "ROOT → ACHSE → TMP → LAGE → laTER → ORT"
+    },
 
-# 6D
-D0 = ROOT
-D1 = ACHSE
-D2 = TMP
-D3 = LAGE
-D4 = laTER
-D5 = ORT
+    "seq": {
+      "value": "SEQ.360",
+      "degrees": 360,
+      "mode": "full-circle"
+    },
 
-# 360°
-SEQ = SEQ.360
-
+    "vector": {
+      "NC2": 128,
+      "6D": 14,
+      "DYN": 9,
+      "ZEN": "
