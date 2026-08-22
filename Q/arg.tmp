@@ -1,1 +1,37 @@
+{
+  "arg.level": 3,
+  "arg.mode": "sync",
+  "arg.room": "ORT",
+  "arg.lock": true,
+
+  "arg.vector": {
+    "NC2": "auto",
+    "6D": "auto",
+    "DYN": "auto",
+    "ZEN": "auto",
+    "SURE": "auto",
+    "GEO": "auto",
+    "RESPO": "auto"
+  },
+
+  "arg.source": [
+    "bauer.tmp",
+    "dame.tmp",
+    "pferd.tmp",
+    "tetriz.tmp",
+    "operator.tmp",
+    "octa.tmp",
+    "xarg.tmp",
+    "schachac.tmp"
+  ],
+
+  "arg.sync": {
+    "state": "aligned",
+    "priority": "Q-layer",
+    "resolver": "RESPO_ARG_SCAN.tmp",
+    "merge": "synthesis"
+  },
+
+  "arg.final": "ARG.sync → Q-layer · RESPO.synthesis · GEO.TRANS"
+}
 
