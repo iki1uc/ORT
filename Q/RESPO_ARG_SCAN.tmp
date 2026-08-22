@@ -1,2 +1,34 @@
-{ "arg.level": 3, "type": "meta", "value": "Ω" }
-
+{
+  "arg.level": 3,
+  "arg.type": "meta",
+  "arg.room": "ORT",
+  "arg.source": [
+    "bauer.tmp",
+    "dame.tmp",
+    "pferd.tmp",
+    "schachac.tmp",
+    "tetriz.tmp",
+    "operator.tmp",
+    "octa.tmp",
+    "xarg.tmp"
+  ],
+  "arg.scan": {
+    "NC2": "auto",
+    "6D": "auto",
+    "DYN": "auto",
+    "ZEN": "auto",
+    "SURE": "auto",
+    "GEO": "auto",
+    "RESPO": "synthesis"
+  },
+  "arg.result": {
+    "NC2": 128,
+    "6D": 14,
+    "DYN": 9,
+    "ZEN": "stabil",
+    "SURE": 2,
+    "GEO": "TRANS",
+    "RESPO": "synthesis"
+  },
+  "arg.final": "NC²:128 | 6D:14 | DYN:9 | GEO:TRANS | RESPO:synthesis"
+}
