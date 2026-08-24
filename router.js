@@ -4,19 +4,18 @@
 
 export const ORT_ROUTER = {
 
-    // 6 Zonen + MAIN.respo als Master
     zones: {
         home: "./home/index.html",
         use: "./use/index.html",
         user: "./user/index.html",
 
-        tmp: "./tmp.a",          // Einstiegspunkt für alle tmp.* Dateien
-        room: "./ADD.room",      // Räume / Szenen
-        verify: "./verify.html", // Prüfungen
-        axiom: "./core.axm"      // Grundlogik
+        tmp: "./tmp.a",
+        room: "./ADD.room",
+        verify: "./verify.html",
+        axiom: "./core.axm"
     },
 
-    master: "./MAIN.respo",      // Master-Layer
+    master: "./MAIN.respo",
 
     state: {
         zone: "home",
@@ -24,7 +23,6 @@ export const ORT_ROUTER = {
         user: null
     },
 
-    // Navigation
     go(zone) {
         if (zone === "main") {
             this.state.master = true;
@@ -37,7 +35,6 @@ export const ORT_ROUTER = {
         window.location.href = this.zones[zone];
     },
 
-    // User laden (leicht, tmp-fähig)
     async loadUser() {
         try {
             const html = await fetch("./user/ID.html").then(r => r.text());
