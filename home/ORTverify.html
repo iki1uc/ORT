@@ -1,0 +1,59 @@
+function buildVector(verify) {
+
+  const lines = verify.split("\n");
+  const length = verify.length;
+
+  // 1) ERROR-LEVEL (12E)
+  const ERROR = verify.includes("ERR")
+    ? (verify.includes("CRIT") ? "kritisch" : "warnung")
+    : "neutral";
+
+  // 2) NC² – Kraftachse
+  const NC2 = length;
+
+  // 3) 6D – Strukturachse
+  const D6 = lines.length;
+
+  // 4) DYN – Bewegung (0–27)
+  const DYN = Math.min(27, length % 28);
+
+  // 5) ZEN – Neutralisierung
+  const ZEN = ERROR === "neutral" ? "stabil" : "puffer";
+
+  // 6) SURE – Stand (1–3)
+  const SURE = (lines.length % 3) + 1;
+
+  // 7) GEO – Segment
+  const GEO_SEGMENTS = ["HY", "PE", "PER", "TRANS", "WARB", "KANAL"];
+  const GEO = GEO_SEGMENTS[length % GEO_SEGMENTS.length];
+
+  // 8) RESPO – Achse (linear, orthogonal, synthesis, infinity)
+  const RESPO = ["linear", "orthogonal", "synthesis", "infinity"][length % 4];
+
+  // 9) ROOM – Erkennung
+  const ROOM = detectRoom(verify);
+
+  // 10) FINAL – Zusammenfassung
+  const FINAL = `NC²:${NC2} | 6D:${D6} | DYN:${DYN} | GEO:${GEO} | ROOM:${ROOM}`;
+
+  return {
+    NC2,
+    D6,
+    ERROR,
+    DYN,
+    ZEN,
+    SURE,
+    GEO,
+    RESPO,
+    ROOM,
+    FINAL
+  };
+}
+
+function detectRoom(content) {
+  if (content.includes("81.room")) return "81.room";
+  if (content.includes("9.room")) return "9.room";
+  if (content.includes("COMMANDS.room")) return "COMMANDS.room";
+  if (content.includes("one.room")) return "one.room";
+  return "default.room";
+}

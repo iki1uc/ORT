@@ -1,0 +1,41 @@
+function buildVector(verify) {
+
+  const lines = verify.split("\n");
+  const length = verify.length;
+
+  // Fehlerstufen
+  const errorLevel = verify.includes("ERR")
+    ? (verify.includes("CRIT") ? "kritisch" : "warnung")
+    : "neutral";
+
+  // DYN – Bewegung (0–27)
+  const dyn = Math.min(27, length % 28);
+
+  // NC – Kraft (0–9)
+  const nc = (length % 10);
+
+  // ZEN – Neutralisierung
+  const zen = errorLevel === "neutral" ? "stabil" : "puffer";
+
+  // SURE – Stand (1–3)
+  const sure = (lines.length % 3) + 1;
+
+  // GEO – Segment
+  const geoSegments = ["HY", "PE", "PER", "TRANS", "WARB", "KANAL"];
+  const geo = geoSegments[length % geoSegments.length];
+
+  // FINAL – Zusammenfassung
+  const FINAL = `NC²:${length} | 6D:${lines.length} | DYN:${dyn} | GEO:${geo}`;
+
+  return {
+    NC2: length,
+    D6: lines.length,
+    ERROR: errorLevel,
+    DYN: dyn,
+    NC: nc,
+    ZEN: zen,
+    SURE: sure,
+    GEO: geo,
+    FINAL
+  };
+}

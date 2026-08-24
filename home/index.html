@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HOME · FINAL · INDUSTRIE‑6.0 · iki1uc</title>
+
+<style>
+/* ===== BASIS ===== */
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+  background: #0a0a0f;
+  color: #00ffff;
+  font-family: 'Consolas', 'Courier New', monospace;
+  padding: 16px;
+  min-height: 100vh;
+}
+
+/* ===== HEADER ===== */
+.header {
+  text-align: center;
+  padding: 10px 0 14px;
+  border-bottom: 2px solid #33ccff;
+  margin-bottom: 14px;
+}
+.header h1 {
+  color: #33ccff;
+  font-size: 28px;
+  letter-spacing: 4px;
+  text-shadow: 0 0 20px #00ffff;
+}
+.header h1 span.home { color: #33ccff; }
+.header h1 span.score { color: #ffdd00; }
+.header h1 span.winner { color: #ff66ff; }
+.header .sub {
+  color: #6688aa;
+  font-size: 11px;
+  letter-spacing: 2px;
+  margin-top: 3px;
+}
+
+/* ===== COCKPIT GRID ===== */
+.cockpit {
+  display: grid;
+  grid-template-columns: 220px 1fr 200px;
+  gap: 10px;
+  height: calc(100vh - 90px);
+}
+
+/* ===== PANELS ===== */
+.panel {
+  background: #111118;
+  border: 1px solid #2a2a3a;
+  border-radius: 8px;
+  padding: 12px 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.panel-title {
+  color: #66ccff;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border-bottom: 1px solid #2a2a3a;
+  padding-bottom: 5px;
+  margin-bottom: 6px;
+}
+.panel a {
+  color: #66ccff;
+  text-decoration: none;
+  display: block;
+  padding: 2px 0;
+  font-size: 10px;
+  border-bottom: 1px solid #1a1a2a;
+  transition: all 0.2s;
+}
+.panel a:hover {
+  color: #00ff88;
+  background: #1a1a2a;
+  padding-left: 6px;
+}
+
+/* ===== INSTRUMENTE ===== */
+.instrument {
+  background: #0d0d18;
+  border: 1px solid #1a1a3a;
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-size: 10px;
+  flex:1;
+  min-width: 45px;
+}
+.instrument .label { color: #6688aa; font-size: 6px; text-transform: uppercase; }
+.instrument .value { font-size: 12px; font-weight: bold; }
+.instrument .value.cyan { color: #00ffff; }
+.instrument .value.gold { color: #ffdd00; }
+.instrument .value.green { color: #88ff44; }
+.instrument .value.pink { color: #ff66ff; }
+.instrument .value.blue { color: #66ccff; }
+.instrument .value.white { color: #ffffff; }
+
+/* ===== DASHBOARD ===== */
+#dashboard {
+  background: #0a0a12;
+  border: 1px solid #2a2a4a;
+  border-radius: 6px;
+  padding: 12px;
+  flex: 1;
+  overflow: auto;
+  min-height: 140px;
+}
+
+#dash-switch {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+#dash-switch button {
+  background: #111122;
+  color: #6688aa;
+  border: 1px solid #2a2a4a;
+  padding: 4px 12px;
+  cursor: pointer;
+  font-family: 'Consolas', monospace;
+  font-size: 10px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+#dash-switch button:hover { background: #1a1a3a; border-color: #66ccff; }
+#dash-switch button.active {
+  background: #1a2a4a;
+  color: #00ff88;
+  border-color: #00ff88;
+}
+#dash-switch button.home-btn { color: #33ccff; border-color: #006688; }
+#dash-switch button.home-btn.active { background: #002233; border-color: #33ccff; }
+
+/* ===== BOXEN ===== */
+.box { background:#111120; border:1px solid #2a2a4a; padding:8px 10px; margin:3px 0; border-radius:4px; font-size:11px; }
+.box.cyan { background:#002233; border-color:#33ccff; color:#33ccff; text-align:center; }
+.box.gold { background:#1a1a00; border-color:#ffdd00; color:#ffdd00; }
+.box.green { background:#002200; border-color:#88ff44; color:#88ff44; }
+.box.pink { background:#220044; border-color:#dd88ff; color:#dd88ff; }
+.box.purple { background:#330033; border-color:#ff66ff; color:#ff66ff; }
+.box.blue { background:#002244; border-color:#66ccff; color:#66ccff; }
+.box.white { background:#111122; border-color:#ffffff; color:#ffffff; text-align:center; }
+
+.holo-box {
+  background:#1a0a2a;
+  padding:16px;
+  border:1px solid #550055;
+  border-radius:6px;
+  animation: pulse 2s infinite ease-in-out;
+}
+@keyframes pulse {
+  0% { box-shadow:0 0 6px #8800aa; }
+  50% { box-shadow:0 0 30px #cc44ff; }
+  100% { box-shadow:0 0 6px #8800aa; }
+}
+
+/* ===== HOME PULSE ===== */
+.home-pulse {
+  animation: homePulse 3s infinite ease-in-out;
+}
+@keyframes homePulse {
+  0% { opacity:0.7; transform:scale(1); }
+  50% { opacity:1; transform:scale(1.02); border-color:#33ccff; }
+  100% { opacity:0.7; transform:scale(1); }
+}
+
+/* ===== STATUS ===== */
+.status-ok { color:#00ff88; }
+.status-warn { color:#ffdd00; }
+.status-err { color:#ff4444; }
+
+/* ===== FILE LIST ===== */
+.file-list { max-height:140px; overflow-y:auto; font-size:9px; }
+.file-list::-webkit-scrollbar { width:3px; }
+.file-list::-webkit-scrollbar-track { background:#0a0a12; }
+.file-list::-webkit-scrollbar-thumb { background:#2a2a4a; border-radius:2px; }
+.file-list a { font-size:9px; padding:1px 0; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 860px) {
+  .cockpit { grid-template-columns:1fr; grid-template-rows:auto; height:auto; }
+  .panel { margin-bottom:6px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<div class="header">
+  <h1>🏠 <span class="home">HOME</span> · <span class="score">SCORE</span> · <span class="winner">WINNER</span> · FINAL</h1>
+  <div class="sub">iki1uc · 692 Scale · BEN → ZOOM → ORT → HOME → 5D/6D/7D · Markt & Wertbildung</div>
+</div>
+
+<!-- ===== COCKPIT ===== -->
+<div class="cockpit">
+
+  <!-- ===== LINKS: NAVIGATION ===== -->
+  <div class="panel" style="grid-column:1; grid-row:1/5;">
+    <div class="panel-title">✦ NAVIGATION</div>
+    <div style="font-size:10px; color:#6688aa; padding-bottom:4px; border-bottom:1px solid #1a1a2a;">
+      <span class="status-ok">●</span> HOME: 🏠 final
+      <br><span class="status-ok">●</span> SCORE: 📊 berechnet
+      <br><span class="status-ok">●</span> WINNER: 🏆 ermittelt
+    </div>
+    <div style="margin-top:4px;">
+      <a href="./CORE.load">⚡ CORE.load</a>
+      <a href="./fin.e.js">🧠 fin.e.js</a>
+      <a href="./ready.js">📈 ready.js</a>
+      <a href="./respo.js">🎯 respo.js</a>
+      <a href="./ID.html">🆔 ID</a>
+      <a href="./suite.html">📦 SUITE</a>
+    </div>
+    <div style="border-top:1px solid #1a1a2a; padding-top:4px;">
+      <div class="panel-title" style="font-size:8px;">HOME‑MODULE</div>
+      <a href="./HOME.repo">📁 HOME.repo</a>
+      <a href="./HOME.run">🏃 HOME.run</a>
+      <a href="./HOME.story">📖 HOME.story</a>
+      <a href="./HOME.vector">📐 HOME.vector</a>
+      <a href="./ADD.room">➕ ADD.room</a>
+    </div>
+    <div style="border-top:1px solid #1a1a2a; padding-top:4px;">
+      <div class="panel-title" style="font-size:8px;">VERIFY</div>
+      <a href="./HOME.verify.html">✅ HOME.verify</a>
+      <a href="./GRÜN.verify.html">🟢 GRÜN.verify</a>
+      <a href="./ORTverify.html">🧭 ORTverify</a>
+      <a href="./verify.html">🔍 verify</a>
+    </div>
+    <div style="border-top:1px solid #1a1a2a; padding-top:4px;">
+      <div class="panel-title" style="font-size:8px;">TIME 3×11</div>
+      <a href="./time_3x11_scroll_zoom.html">⏱️ Scroll + Zoom + Move</a>
+    </div>
+    <div style="border-top:1px solid #1a1a2a; padding-top:4px; margin-top:auto;">
+      <a href="./AXIS/nc.html" style="color:#66ccff;">🌀 NC</a>
+      <a href="./AXIS/phi.html" style="color:#66ccff;">Φ PHI</a>
+      <a href="./AXIS/phiinfty.html" style="color:#66ccff;">♾️ PHI∞</a>
+    </div>
+  </div>
+
+  <!-- ===== MITTE: DASHBOARD ===== -->
+  <div style="grid-column:2; grid-row:1/5; display:flex; flex-direction:column; gap:6px;">
+
+    <!-- INSTRUMENTE -->
+    <div class="panel" style="flex:0; flex-direction:row; flex-wrap:wrap; gap:3px;">
+      <div class="instrument" style="min-width:45px;"><div class="label">🏠 HOME</div><div class="value cyan" id="home-val">⟳</div></div>
+      <div class="instrument" style="min-width:45px;"><div class="label">📊 SCORE</div><div class="value gold" id="score-val">⟳</div></div>
+      <div class="instrument" style="min-width:45px;"><div class="label">🏆 WINNER</div><div class="value pink" id="winner-val">⟳</div></div>
+      <div class="instrument" style="min-width:45px;"><div class="label">5D</div><div class="value green" id="d5-val">⟳</div></div>
+      <div class="instrument" style="min-width:45px;"><div class="label">6D</div><div class="value gold" id="d6-val">⟳</div></div>
+      <div class="instrument" style="min-width:45px;"><div class="label">7D</div><div class="value pink" id="d7-val">⟳</div></div>
+      <div class="instrument" style="min-width:45px;"><div class="label">NC²</div><div class="value cyan" id="nc2-val">⟳</div></div>
+      <div class="instrument" style="min-width:45px;"><div class="label">DYN</div><div class="value green" id="dyn-val">⟳</div></div>
+      <div class="instrument" style="min-width:45px;"><div class="label">GEO</div><div class="value gold" id="geo-val">⟳</div></div>
+      <div class="instrument" style="min-width:45px;"><div class="label">ROOM</div><div class="value blue" id="room-val">⟳</div></div>
+      <div class="instrument" style="min-width:40px;"><div class="label">READY</div><div class="value green" id="ready-val">…</div></div>
+      <div class="instrument" style="min-width:40px;"><div class="label">MIND</div><div class="value pink" id="mind-val">…</div></div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div class="panel" style="flex:1; min-height:140px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+        <span class="panel-title" style="margin:0; border:0;">📺 DASHBOARD</span>
+        <div id="dash-switch">
+          <button data-mode="grid" class="active">GRID</button>
+          <button data-mode="control">CONTROL</button>
+          <button data-mode="holo">HOLO</button>
+          <button data-mode="auto" class="home-btn">🏠 AUTO</button>
+        </div>
+      </div>
+      <div id="dashboard" style="flex:1;">
+        <div class="box cyan home-pulse">🏠 HOME · FINAL · SCORE · WINNER</div>
+      </div>
+    </div>
+
+    <!-- DATEI-BROWSER -->
+    <div class="panel" style="flex:0; max-height:100px;">
+      <div class="panel-title">📂 DATEI‑BROWSER</div>
+      <div class="file-list" id="file-list">
+        <span style="color:#6688aa; font-size:9px;">Lade Dateien…</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== RECHTS: STATUS ===== -->
+  <div class="panel" style="grid-column:3; grid-row:1/5;">
+    <div class="panel-title">✦ STATUS</div>
+    <div style="font-size:10px; line-height:1.6;">
+      <div><span class="status-ok">●</span> HOME: <span style="color:#33ccff;">🏠 final</span></div>
+      <div><span class="status-ok">●</span> SCORE: <span style="color:#ffdd00;">📊 berechnet</span></div>
+      <div><span class="status-ok">●</span> WINNER: <span style="color:#ff66ff;">🏆 ermittelt</span></div>
+      <div><span class="status-ok">●</span> 5D: <span style="color:#88ff44;">geladen</span></div>
+      <div><span class="status-ok">●</span> 6D: <span style="color:#ffdd00;">geladen</span></div>
+      <div><span class="status-ok">●</span> 7D: <span style="color:#ff66ff;">geladen</span></div>
+      <div><span class="status-ok">●</span> VECTOR: <span style="color:#00ffff;">aktiv</span></div>
+      <div><span class="status-ok">●</span> MARKT: <span style="color:#ffdd00;">analysiert</span></div>
+    </div>
+
+    <div style="border-top:1px solid #1a1a2a; padding-top:6px;">
+      <div class="panel-title" style="font-size:8px;">MARKTLAGE</div>
+      <div style="font-size:10px; color:#ffdd00;" id="markt-status">⟳ analysiert…</div>
+    </div>
+
+    <div style="border-top:1px solid #1a1a2a; padding-top:6px;">
+      <div class="panel-title" style="font-size:8px;">WERTBILDUNG</div>
+      <div style="font-size:10px; color:#88ff44;" id="wert-status">⟳ berechnet…</div>
+    </div>
+
+    <div style="border-top:1px solid #1a1a2a; padding-top:6px;">
+      <div class="panel-title" style="font-size:8px;">GEWINNER‑CODE</div>
+      <div style="font-size:8px; color:#ff66ff; word-break:break-all;" id="code-status">⟳ SHA256…</div>
+    </div>
+
+    <div style="border-top:1px solid #1a1a2a; padding-top:6px;">
+      <div class="panel-title" style="font-size:8px;">ORDNUNGEN</div>
+      <div style="font-size:8px; color:#6688aa; line-height:1.4;">
+        1: CONTINUUM <span style="color:#00ff88;">●</span><br>
+        2: TRANSWARP <span style="color:#66ccff;">●</span><br>
+        3: WARP3 <span style="color:#88ff44;">●</span><br>
+        4: AEON <span style="color:#ff66ff;">●</span>
+      </div>
+    </div>
+
+    <div style="border-top:1px solid #1a1a2a; padding-top:6px; margin-top:auto;">
+      <div style="font-size:8px; color:#445566;" id="clock">⏱️ </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- SCRIPT – ULTIMATE HOME · FINAL ENGINE -->
+<!-- ============================================================ -->
+<script>
+(function() {
+
+  // ============================================================
+  // HOME-SCORE ENGINE (FINAL)
+  // ============================================================
+
+  // ===== FALLBACK WERTE =====
+  const BEN  = 42.0;
+  const ZOOM = 56.0;
+  const ORT  = 78.0;
+  const HOME = 92.0;
+  const D5 = 45.0;
+  const D6 = 67.0;
+  const D7 = 89.0;
+
+  // ===== SCORE =====
+  function calculateScore(b, z, o, h, d5, d6, d7) {
+    return (b * 0.1) + (z * 0.2) + (o * 0.3) + (h * 0.4) + (d5 + d6 + d7);
+  }
+
+  // ===== STORY =====
+  function buildStory(b, z, o, h, d5, d6, d7) {
+    return `
+BEN → ${b}
+ZOOM → ${z}
+ORT → ${o}
+HOME → ${h}
+
+5D → ${d5}
+6D → ${d6}
+7D → ${d7}
+
+Finale Story:
+HOME zeigt die vollständige Realität des Kandidaten.
+BEN → ZOOM → ORT → HOME → 5D/6D/7D → SCORE → WINNER
+`;
+  }
+
+  // ===== VECTOR =====
+  function buildVector(story) {
+    const lines = story.split("\n");
+    const length = story.length;
+    const errorLevel = story.includes("ERR") ? (story.includes("CRIT") ? "kritisch" : "warnung") : "neutral";
+    const dyn = Math.min(27, length % 28);
+    const nc = length % 10;
+    const zen = errorLevel === "neutral" ? "stabil" : "puffer";
+    const sure = (lines.length % 3) + 1;
+    const geoSegments = ["HY", "PE", "PER", "TRANS", "WARB", "KANAL"];
+    const geo = geoSegments[length % geoSegments.length];
+    const respo = ["linear", "orthogonal", "synthesis", "infinity"][length % 4];
+
+    let room = "default.room";
+    if (story.includes("81.room")) room = "81.room";
+    else if (story.includes("9.room")) room = "9.room";
+    else if (story.includes("COMMANDS.room")) room = "COMMANDS.room";
+    else if (story.includes("one.room")) room = "one.room";
+
+    return {
+      NC2: length,
+      D6: lines.length,
+      ERROR: errorLevel,
+      DYN: dyn,
+      NC: nc,
+      ZEN: zen,
+      SURE: sure,
+      GEO: geo,
+      RESPO: respo,
+      ROOM: room,
+      FINAL: `NC²:${length} | 6D:${lines.length} | DYN:${dyn} | GEO:${geo} | ROOM:${room}`
+    };
+  }
+
+  // ===== SHA256 =====
+  async function sha256(str) {
+    const buf = new TextEncoder().encode(str);
+    const hash = await crypto.subtle.digest("SHA-256", buf);
+    return Array.from(new Uint8Array(hash))
+      .map(b => b.toString(16).padStart(2, "0"))
+      .join("");
+  }
+
+  // ===== MARKT & WERTBILDUNG =====
+  function marktAnalyse(score) {
+    if (score < 80) return "🟡 Marktlage: Schwach · Risiko hoch";
+    if (score < 150) return "🟢 Marktlage: Neutral · Stabilität mittel";
+    if (score < 250) return "🟢 Marktlage: Stark · Gute Wertbildung";
+    return "🟢 Marktlage: Sehr stark · Wertbildung maximal";
+  }
+
+  function wertBildung(d5, d6, d7) {
+    const sum = d5 + d6 + d7;
+    if (sum < 100) return "🟡 Wertbildung: niedrig";
+    if (sum < 200) return "🟢 Wertbildung: mittel";
+    if (sum < 350) return "🟢 Wertbildung: hoch";
+    return "🟢 Wertbildung: extrem";
+  }
+
+  // ============================================================
+  // STATE
+  // ============================================================
+  let state = {
+    score: 0,
+    story: "",
+    vector: null,
+    winner: "Kandidat_A",
+    code: "",
+    markt: "",
+    wert: ""
+  };
+
+  // ============================================================
+  // DOM UPDATES
+  // ============================================================
+  function updateInstruments() {
+    try {
+      const score = state.score;
+      const vector = state.vector;
+
+      document.getElementById("home-val").innerText = "🏠" + score.toFixed(0);
+      document.getElementById("score-val").innerText = "📊" + score.toFixed(1);
+      document.getElementById("winner-val").innerText = "🏆" + state.winner.substring(0, 8);
+      document.getElementById("d5-val").innerText = "5D" + D5.toFixed(0);
+      document.getElementById("d6-val").innerText = "6D" + D6.toFixed(0);
+      document.getElementById("d7-val").innerText = "7D" + D7.toFixed(0);
+      document.getElementById("nc2-val").innerText = vector ? vector.NC2 : "…";
+      document.getElementById("dyn-val").innerText = vector ? vector.DYN : "…";
+      document.getElementById("geo-val").innerText = vector ? vector.GEO : "…";
+      document.getElementById("room-val").innerText = vector ? vector.ROOM : "…";
+      document.getElementById("ready-val").innerText = "✓";
+      document.getElementById("mind-val").innerText = "AEON(4)";
+
+      document.getElementById("markt-status").innerText = state.markt;
+      document.getElementById("wert-status").innerText = state.wert;
+      document.getElementById("code-status").innerText = state.code ? state.code.substring(0, 32) + "…" : "…";
+    } catch(e) {
+      // Fallback
+    }
+  }
+
+  // ============================================================
+  // DASHBOARD RENDERER
+  // ============================================================
+  const dash = document.getElementById("dashboard");
+
+  function renderGrid() {
+    const score = state.score;
+    const vector = state.vector;
+    dash.innerHTML = `
+      <div class="box cyan home-pulse">🏠 HOME · SCORE: ${score.toFixed(2)}</div>
+      <div class="box gold">🏆 WINNER: ${state.winner}</div>
+      <div class="box green">📊 BEN:${BEN.toFixed(0)} · ZOOM:${ZOOM.toFixed(0)} · ORT:${ORT.toFixed(0)} · HOME:${HOME.toFixed(0)}</div>
+      <div class="box pink">5D:${D5.toFixed(0)} · 6D:${D6.toFixed(0)} · 7D:${D7.toFixed(0)}</div>
+      ${vector ? `
+        <div class="box blue">NC²:${vector.NC2} · 6D:${vector.D6} · DYN:${vector.DYN}</div>
+        <div class="box purple">GEO:${vector.GEO} · ROOM:${vector.ROOM} · RESPO:${vector.RESPO}</div>
+        <div style="font-size:8px;color:#6688aa;margin-top:3px;">${vector.FINAL}</div>
+      ` : ''}
+      <div style="font-size:8px;color:#33ccff;margin-top:3px;">${state.markt} · ${state.wert}</div>
+    `;
+  }
+
+  function renderControl() {
+    const score = state.score;
+    const vector = state.vector;
+    dash.innerHTML = `
+      <div style="background:#111120;padding:14px;border:1px solid #2a2a4a;border-radius:4px;">
+        <div style="color:#33ccff;font-size:20px;text-align:center;">🏠 HOME · SCORE: ${score.toFixed(2)}</div>
+        <div style="color:#ff66ff;font-size:16px;text-align:center;">🏆 WINNER: ${state.winner}</div>
+        <h2 style="color:#66ccff;font-size:14px;">⏣ CONTROL</h2>
+        <p style="color:#88ff44;">BEN:${BEN.toFixed(0)} · ZOOM:${ZOOM.toFixed(0)} · ORT:${ORT.toFixed(0)} · HOME:${HOME.toFixed(0)}</p>
+        <p style="color:#ffdd00;">5D:${D5.toFixed(0)} · 6D:${D6.toFixed(0)} · 7D:${D7.toFixed(0)}</p>
+        ${vector ? `
+          <p style="color:#66ccff;">NC²:${vector.NC2} · 6D:${vector.D6} · DYN:${vector.DYN}</p>
+          <p style="color:#ff66ff;">GEO:${vector.GEO} · ROOM:${vector.ROOM} · RESPO:${vector.RESPO}</p>
+          <p style="color:#ffdd00;font-size:9px;">${vector.FINAL}</p>
+        ` : ''}
+        <p style="color:#00ff88;font-size:9px;">${state.markt} · ${state.wert}</p>
+        <p style="color:#ff66ff;font-size:8px;word-break:break-all;">CODE: ${state.code ? state.code.substring(0, 40) + '…' : '…'}</p>
+      </div>
+    `;
+  }
+
+  function renderHolo() {
+    const score = state.score;
+    const vector = state.vector;
+    dash.innerHTML = `
+      <div class="holo-box">
+        <div style="color:#33ccff;font-size:28px;text-align:center;">🏠 ${score.toFixed(0)}</div>
+        <div style="color:#ff66ff;font-size:18px;text-align:center;">🏆 ${state.winner}</div>
+        <h2 style="color:#ff66ff;font-size:14px;">✦ HOLO CORE ✦</h2>
+        <p style="color:#88ff44;">BEN:${BEN.toFixed(0)} · ZOOM:${ZOOM.toFixed(0)} · ORT:${ORT.toFixed(0)} · HOME:${HOME.toFixed(0)}</p>
+        <p style="color:#ffdd00;">5D:${D5.toFixed(0)} · 6D:${D6.toFixed(0)} · 7D:${D7.toFixed(0)}</p>
+        ${vector ? `
+          <p style="color:#66ccff;">NC²:${vector.NC2} · DYN:${vector.DYN} · GEO:${vector.GEO}</p>
+          <p style="color:#ff66ff;">ROOM:${vector.ROOM} · RESPO:${vector.RESPO}</p>
+        ` : ''}
+        <p style="color:#00ff88;font-size:9px;">${state.markt}</p>
+        <p style="color:#ff66ff;font-size:7px;word-break:break-all;">${state.code ? state.code.substring(0, 30) + '…' : '…'}</p>
+      </div>
+    `;
+  }
+
+  // ============================================================
+  // ENTSCHEIDUNG
+  // ============================================================
+  function decideMode() {
+    const score = state.score;
+    if (score < 100) return "grid";
+    if (score < 200) return "control";
+    return "holo";
+  }
+
+  function updateDashboard(mode) {
+    if (mode === "grid") renderGrid();
+    else if (mode === "control") renderControl();
+    else if (mode === "holo") renderHolo();
+    else { updateDashboard(decideMode()); return; }
+    updateInstruments();
+  }
+
+  // ============================================================
+  // SWITCHER
+  // ============================================================
+  let autoInterval = null;
+
+  function setupSwitcher() {
+    document.querySelectorAll("#dash-switch button").forEach(btn => {
+      btn.addEventListener("click", function() {
+        document.querySelectorAll("#dash-switch button").forEach(b => b.classList.remove("active"));
+        this.classList.add("active");
+        if (autoInterval) { clearInterval(autoInterval); autoInterval = null; }
+        if (this.dataset.mode === "auto") {
+          updateDashboard("auto");
+          autoInterval = setInterval(() => updateDashboard("auto"), 2000 + Math.random() * 2000);
+          return;
+        }
+        updateDashboard(this.dataset.mode);
+      });
+    });
+  }
+
+  // ============================================================
+  // DATEI-BROWSER
+  // ============================================================
+  function loadFileList() {
+    const list = document.getElementById("file-list");
+    const files = [
+      "CORE.load","fin.e.js","ready.js","respo.js","ID.html","suite.html",
+      "HOME.repo","HOME.run","HOME.story","HOME.vector","ADD.room",
+      "HOME.verify.html","GRÜN.verify.html","ORTverify.html","verify.html",
+      "time_3x11_scroll_zoom.html",
+      "visual/CONTINUUM.html","visual/LAGE.html","visual/ORT.html",
+      "AXIS/nc.html","AXIS/phi.html","AXIS/phi2.html","AXIS/phiinfty.html"
+    ];
+    list.innerHTML = files.map(f => `<a href="./${f}">📄 ${f}</a>`).join("");
+  }
+
+  // ============================================================
+  // CLOCK
+  // ============================================================
+  function updateClock() {
+    document.getElementById("clock").innerText = "⏱️ " + new Date().toLocaleTimeString();
+  }
+
+  // ============================================================
+  // MODULE NACHLADEN
+  // ============================================================
+  function tryLoadModules() {
+    try {
+      import('./ready.js').then(m => {
+        window.READY = m.READY || m.default;
+        updateInstruments();
+      }).catch(() => {});
+      import('./core/respo.js').then(m => {
+        window.RESPO_AXIS = m.RESPO_AXIS || m.default;
+        updateInstruments();
+      }).catch(() => {});
+    } catch {}
+  }
+
+  // ============================================================
+  // START – HOME FINAL ENGINE
+  // ============================================================
+  async function start() {
+    // Score berechnen
+    const score = calculateScore(BEN, ZOOM, ORT, HOME, D5, D6, D7);
+    const story = buildStory(BEN, ZOOM, ORT, HOME, D5, D6, D7);
+    const vector = buildVector(story);
+    const code = await sha256(score + "Kandidat_A");
+
+    state.score = score;
+    state.story = story;
+    state.vector = vector;
+    state.winner = "Kandidat_A";
+    state.code = code;
+    state.markt = marktAnalyse(score);
+    state.wert = wertBildung(D5, D6, D7);
+
+    loadFileList();
+    setupSwitcher();
+    updateDashboard("grid");
+    updateClock();
+    setInterval(updateClock, 1000);
+    setInterval(updateInstruments, 2000);
+    tryLoadModules();
+
+    console.log("🏠 HOME FINAL geladen – Industrie‑6.0 · iki1uc");
+    console.log("📊 SCORE:", score.toFixed(2));
+    console.log("🏆 WINNER:", state.winner);
+    console.log("📐 VECTOR:", vector);
+    console.log("📈 MARKT:", state.markt);
+    console.log("💎 WERT:", state.wert);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', start);
+  } else {
+    start();
+  }
+
+})();
+</script>
+
+</body>
+</html>
