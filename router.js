@@ -1,32 +1,33 @@
-// ============================================================
-// ORT · Router · 6-Logik
-// ============================================================
+export const ORT_ROUTER = {
 
-export const ORT = {
-    state: {
-        route: "home",
-        user: null
-    },
-
-    routes: {
+    zones: {
         home: "./home/index.html",
         use: "./use/index.html",
-        user: "./user/index.html"
+        user: "./user/index.html",
+
+        tmp: "./tmp.a",          // Einstiegspunkt für tmp‑Module
+        room: "./ADD.room",      // Räume
+        verify: "./verify.html", // Prüfungen
+        axiom: "./core.axm"      // Grundlogik
+
     },
 
-    navigate(to) {
-        if (!this.routes[to]) return;
-        this.state.route = to;
-        window.location.href = this.routes[to];
+    master: "./MAIN.respo",      // Master‑Layer
+
+    state: {
+        zone: "home",
+        master: false
     },
 
-    async loadUser() {
-        try {
-            const data = await fetch("./user/user.json").then(r => r.json());
-            this.state.user = data;
-        } catch {
-            this.state.user = null;
+    go(zone) {
+        if (zone === "main") {
+            this.state.master = true;
+            window.location.href = this.master;
+            return;
         }
-        return this.state.user;
+
+        if (!this.zones[zone]) return;
+        this.state.zone = zone;
+        window.location.href = this.zones[zone];
     }
 };
