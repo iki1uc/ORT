@@ -1,31 +1,20 @@
-// ============================================================
-// ORT · SERVICE BOOT · HOME / USE / USER
-// ============================================================
+import { ORT_ROUTER } from "./router.js";
+import { ORT_NAV } from "./nav.js";
 
-export const ORT = {
-    status: "offline",
-    routes: {},
-    user: null,
+export async function ORT_BOOT() {
 
-    async boot() {
+    // User laden (optional)
+    await ORT_ROUTER.loadUser();
 
-        // 1 — ROUTES laden
-        this.routes.home = await import("./home/index.js").catch(() => null);
-        this.routes.use  = await import("./use/index.js").catch(() => null);
-        this.routes.user = await import("./user/index.js").catch(() => null);
+    // Navigation aktivieren
+    ORT_NAV();
 
-        // 2 — USER laden (falls vorhanden)
-        if (this.routes.user?.loadUser) {
-            this.user = await this.routes.user.loadUser();
-        }
+    // Startzone
+    ORT_ROUTER.go("home");
 
-        // 3 — Status setzen
-        this.status = "online";
-
-        return {
-            status: this.status,
-            routes: Object.keys(this.routes),
-            user: this.user
-        };
-    }
-};
+    return {
+        status: "ORT online",
+        zones: Object.keys(ORT_ROUTER.zones),
+        master: ORT_ROUTER.master
+    };
+}
