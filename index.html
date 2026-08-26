@@ -1,613 +1,754 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🏠 PENTHOUSE 6.0 · SCHALTEN & WALTEN</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧠 ORTE‑EVO · ARBEITSPLATZ · EDITIERRAUM · FORMMAUM</title>
 
-<style>
-* { box-sizing:border-box; margin:0; padding:0; }
-body {
-  background: #0a0a0f;
-  color: #00ffff;
-  font-family: 'Consolas', 'Courier New', monospace;
-  overflow: hidden;
-  height: 100vh;
-  perspective: 1200px;
-}
-.header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 44px;
-  background: rgba(10,10,18,0.92);
-  border-bottom: 2px solid #33ccff;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 12px;
-  z-index: 1000;
-  backdrop-filter: blur(10px);
-}
-.header h1 { color: #33ccff; font-size: 14px; letter-spacing: 2px; }
-.header h1 span { color: #ffdd00; }
-.header .info { color: #6688aa; font-size: 9px; display: flex; gap: 10px; }
-.header .info span { color: #ffdd00; }
-.header .info .freq { color: #ff66ff; }
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0a0a12;
+            color: #e6f6ff;
+            font-family: 'Consolas', monospace;
+            min-height: 100vh;
+            padding: 12px;
+            background-image: radial-gradient(ellipse at 30% 40%, #0a0a20 0%, #000 100%);
+        }
 
-#penthouse {
-  position: fixed;
-  top: 44px;
-  left: 0;
-  right: 0;
-  bottom: 56px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 12px;
-  background: radial-gradient(ellipse at center, #0a0a1a, #000000);
-  overflow: hidden;
-}
-.panorama {
-  position: relative;
-  width: 100%;
-  max-width: 1000px;
-  height: 100%;
-  max-height: 600px;
-  transform: rotateX(5deg) rotateY(0deg);
-  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-  transform-style: preserve-3d;
-}
-.floor {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%) rotateX(90deg) translateZ(-160px);
-  width: 600px;
-  height: 600px;
-  background: repeating-conic-gradient(from 0deg at 50% 50%, #1a1a3a 0deg 10deg, #0a0a1a 10deg 20deg);
-  border-radius: 50%;
-  opacity: 0.25;
-  animation: floorSpin 40s linear infinite;
-  box-shadow: 0 0 80px rgba(51,204,255,0.08);
-}
-@keyframes floorSpin {
-  from { transform: translateX(-50%) rotateX(90deg) translateZ(-160px) rotate(0deg); }
-  to { transform: translateX(-50%) rotateX(90deg) translateZ(-160px) rotate(360deg); }
-}
-.freq-stream {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-.freq-particle {
-  position: absolute;
-  width: 3px;
-  height: 3px;
-  border-radius: 50%;
-  animation: freqRise linear infinite;
-}
-@keyframes freqRise {
-  0% { transform: translateY(100%) scale(0); opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { transform: translateY(-100%) scale(1); opacity: 0; }
-}
-.axis-6d {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 440px;
-  height: 440px;
-  border-radius: 50%;
-  border: 1px solid rgba(51,204,255,0.04);
-  animation: axisSpin 60s linear infinite;
-}
-.axis-6d .ring {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  border: 1px solid rgba(51,204,255,0.05);
-}
-.axis-6d .ring.r1 { width: 80%; height: 80%; }
-.axis-6d .ring.r2 { width: 60%; height: 60%; }
-.axis-6d .ring.r3 { width: 40%; height: 40%; }
-.axis-6d .ring.r4 { width: 20%; height: 20%; border-color: rgba(255,221,0,0.1); }
-@keyframes axisSpin {
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to { transform: translate(-50%, -50%) rotate(360deg); }
-}
-.scanner {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 280px;
-  height: 280px;
-  border: 2px solid rgba(51,204,255,0.1);
-  border-radius: 50%;
-  animation: scannerPulse 3s ease-in-out infinite;
-}
-.scanner::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 140px;
-  height: 140px;
-  border: 1px solid rgba(255,221,0,0.06);
-  border-radius: 50%;
-  animation: scannerPulse 2s ease-in-out infinite 0.5s;
-}
-.scanner::after {
-  content: '●';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #ffdd00;
-  font-size: 9px;
-  animation: scannerBlink 1s ease-in-out infinite;
-}
-@keyframes scannerPulse {
-  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.25; }
-  50% { transform: translate(-50%, -50%) scale(1.12); opacity: 0.6; }
-}
-@keyframes scannerBlink {
-  0%, 100% { opacity: 0.2; }
-  50% { opacity: 1; text-shadow: 0 0 40px #ffdd00; }
-}
-.ort-marker {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #ffdd00;
-  font-size: 36px;
-  text-shadow: 0 0 60px rgba(255,221,0,0.25);
-  animation: markerPulse 2s ease-in-out infinite;
-}
-@keyframes markerPulse {
-  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
-  50% { transform: translate(-50%, -50%) scale(1.08); opacity: 1; }
-}
-.tmp-rooms {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  pointer-events: none;
-}
-.tmp-room {
-  position: absolute;
-  padding: 3px 7px;
-  background: rgba(17,17,34,0.5);
-  border: 1px solid rgba(51,204,255,0.06);
-  border-radius: 4px;
-  font-size: 6px;
-  color: #6688aa;
-  backdrop-filter: blur(4px);
-  transition: all 0.4s;
-  cursor: pointer;
-  pointer-events: auto;
-  user-select: none;
-}
-.tmp-room:hover { border-color: #33ccff; color: #00ffff; transform: scale(1.12); box-shadow: 0 0 20px rgba(51,204,255,0.08); }
-.tmp-room.active { border-color: #ffdd00; color: #ffdd00; background: rgba(255,221,0,0.06); }
-.tmp-room.help { border-color: #88ff44; color: #88ff44; }
-.tmp-room.error { border-color: #ff4444; color: #ff4444; }
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
 
-#status {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 44px;
-  background: rgba(10,10,18,0.92);
-  border-top: 2px solid #2a2a3a;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 12px;
-  z-index: 1000;
-  backdrop-filter: blur(10px);
-  font-size: 9px;
-  color: #6688aa;
-}
-#status .center { color: #33ccff; }
-#status .center span { color: #ff66ff; }
-#status .right span { color: #88ff44; }
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #ffd700;
+            padding-bottom: 10px;
+            margin-bottom: 14px;
+        }
+        .header h1 {
+            font-size: 26px;
+            color: #ffd700;
+            letter-spacing: 5px;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+        }
+        .header .sub {
+            color: #445555;
+            font-size: 11px;
+            letter-spacing: 3px;
+        }
+        .header .sub span { color: #88ddbb; }
 
-#controls {
-  position: fixed;
-  bottom: 48px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 3px;
-  z-index: 1001;
-  flex-wrap: wrap;
-  justify-content: center;
-  max-width: 98%;
-}
-#controls button {
-  background: rgba(17,17,34,0.7);
-  color: #6688aa;
-  border: 1px solid #2a2a4a;
-  padding: 3px 10px;
-  cursor: pointer;
-  font-family: 'Consolas', monospace;
-  font-size: 7px;
-  border-radius: 3px;
-  transition: all 0.3s;
-  backdrop-filter: blur(4px);
-}
-#controls button:hover { background: #1a1a3a; border-color: #66ccff; color: #00ffff; }
-#controls button.active { background: #1a2a4a; color: #00ff88; border-color: #00ff88; }
-#controls button.gold { color: #ffdd00; border-color: #554400; }
-#controls button.gold:hover { background: #2a1a00; border-color: #ffdd00; }
-#controls button.red { color: #ff4444; border-color: #442222; }
-#controls button.red:hover { background: #2a0a0a; border-color: #ff4444; }
-#controls button.green { color: #88ff44; border-color: #224422; }
-#controls button.green:hover { background: #0a2a0a; border-color: #88ff44; }
-#controls button.mxu { color: #ff66ff; border-color: #442244; }
-#controls button.mxu:hover { background: #2a0a2a; border-color: #ff66ff; }
+        .grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 12px;
+        }
+        @media (max-width: 1000px) {
+            .grid { grid-template-columns: 1fr; }
+        }
 
-@media (max-width: 700px) {
-  .header h1 { font-size: 10px; }
-  .header .info { font-size: 7px; gap: 4px; }
-  .floor { width: 300px; height: 300px; }
-  .axis-6d { width: 220px; height: 220px; }
-  .scanner { width: 140px; height: 140px; }
-  .scanner::before { width: 70px; height: 70px; }
-  .ort-marker { font-size: 24px; }
-  .tmp-room { font-size: 5px; padding: 2px 4px; }
-  #controls button { font-size: 6px; padding: 2px 6px; }
-}
-</style>
+        .panel {
+            background: rgba(10,10,20,0.4);
+            border: 1px solid rgba(255,255,255,0.02);
+            border-radius: 12px;
+            padding: 12px;
+            backdrop-filter: blur(10px);
+        }
+        .panel h2 {
+            color: #ffd700;
+            font-size: 13px;
+            border-bottom: 1px solid rgba(255,255,255,0.02);
+            padding-bottom: 6px;
+            margin-bottom: 8px;
+        }
+
+        /* Canvas */
+        .canvas-wrap {
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        #formCanvas {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 16/10;
+            display: block;
+            background: #0a0a12;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.02);
+        }
+
+        .controls {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+            margin: 6px 0;
+        }
+        button {
+            background: #111;
+            color: #9cf;
+            border: 1px solid #333;
+            padding: 5px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 9px;
+            transition: all 0.2s;
+        }
+        button:hover {
+            background: #1a1a2a;
+            border-color: #ffd700;
+        }
+        button.primary {
+            border-color: #ffd700;
+            color: #ffd700;
+        }
+        button.primary:hover {
+            background: #ffd700;
+            color: #000;
+        }
+        button.active {
+            background: #1a1a2a;
+            border-color: #4f4;
+            color: #4f4;
+        }
+
+        /* Slider */
+        .slider-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px;
+            margin: 4px 0;
+        }
+        .slider-item {
+            background: #0e0e1a;
+            border: 1px solid #1a1a2a;
+            border-radius: 4px;
+            padding: 4px 6px;
+            display: flex;
+            flex-direction: column;
+        }
+        .slider-item .label {
+            color: #666;
+            font-size: 7px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .slider-item input[type="range"] {
+            width: 100%;
+            height: 4px;
+            background: #1a1a2a;
+            border-radius: 2px;
+            -webkit-appearance: none;
+            appearance: none;
+            margin: 2px 0;
+        }
+        .slider-item input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #ffd700;
+            cursor: pointer;
+        }
+        .slider-item .value {
+            color: #ffd700;
+            font-size: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* Log */
+        #log {
+            background: rgba(0,0,0,0.3);
+            border-radius: 6px;
+            padding: 6px 8px;
+            font-size: 8px;
+            color: #88ddbb;
+            max-height: 80px;
+            overflow-y: auto;
+            font-family: monospace;
+            line-height: 1.4;
+            border: 1px solid rgba(255,255,255,0.02);
+            margin-top: 4px;
+        }
+        #log .entry { padding: 1px 0; border-bottom: 1px solid rgba(255,255,255,0.02); }
+        #log .time { color: #445555; }
+        #log .ok { color: #4f4; }
+        #log .warn { color: #ffaa00; }
+        #log .info { color: #4fc3f7; }
+
+        .module-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 3px;
+            margin: 4px 0;
+        }
+        .module-btn {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 4px;
+            padding: 4px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 8px;
+            color: #666;
+        }
+        .module-btn:hover {
+            border-color: #ffd700;
+            background: rgba(255,215,61,0.05);
+        }
+        .module-btn.active {
+            border-color: #ffd700;
+            color: #ffd700;
+            background: rgba(255,215,61,0.08);
+        }
+        .module-btn .sym { font-size: 14px; display: block; }
+
+        .footer {
+            text-align: center;
+            margin-top: 12px;
+            padding: 8px;
+            color: #222;
+            font-size: 8px;
+            letter-spacing: 2px;
+            border-top: 1px solid rgba(255,255,255,0.01);
+        }
+        .footer span { color: #ffd700; }
+
+        .ort-output {
+            background: rgba(0,0,0,0.3);
+            border-radius: 4px;
+            padding: 6px;
+            font-size: 8px;
+            color: #88ddbb;
+            max-height: 60px;
+            overflow-y: auto;
+            font-family: monospace;
+            white-space: pre-wrap;
+            border: 1px solid rgba(255,255,255,0.02);
+            margin-top: 4px;
+        }
+    </style>
 </head>
 <body>
 
-<div class="header">
-  <h1>🏠 PENTHOUSE · <span>6.0</span> · SCHALTEN & WALTEN</h1>
-  <div class="info">
-    <span class="freq" id="freqDisplay">12e</span>
-    <span>6D · <span id="d5">HSF</span></span>
-    <span>RESPO · <span id="respoStatus">synthesis</span></span>
-    <span>MXU · <span id="mxuDisplay">SYNC</span></span>
-  </div>
+<div class="container">
+
+    <!-- ===== HEADER ===== -->
+    <div class="header">
+        <h1>🧠 ORTE‑EVO · ARBEITSPLATZ · EDITIERRAUM · FORMMAUM</h1>
+        <div class="sub">interaktiv · programmierbar · live · <span>wieimmer4u</span></div>
+    </div>
+
+    <div class="grid">
+
+        <!-- ===== LINKER BEREICH: CANVAS ===== -->
+        <div class="panel">
+            <h2>🌀 FORMMAUM · ORTE‑EVO‑SCENE</h2>
+            <div class="canvas-wrap">
+                <canvas id="formCanvas"></canvas>
+            </div>
+
+            <!-- Slider -->
+            <div class="slider-group">
+                <div class="slider-item">
+                    <span class="label">🌀 Rotation X</span>
+                    <input type="range" id="rotX" min="0" max="360" value="0">
+                    <span class="value" id="rotX-val">0°</span>
+                </div>
+                <div class="slider-item">
+                    <span class="label">🌀 Rotation Y</span>
+                    <input type="range" id="rotY" min="0" max="360" value="0">
+                    <span class="value" id="rotY-val">0°</span>
+                </div>
+                <div class="slider-item">
+                    <span class="label">📐 Skala</span>
+                    <input type="range" id="scale" min="0.3" max="1.5" step="0.01" value="1.0">
+                    <span class="value" id="scale-val">1.00</span>
+                </div>
+                <div class="slider-item">
+                    <span class="label">🌀 TMP‑Pulse</span>
+                    <input type="range" id="pulse" min="0" max="2" step="0.01" value="1.0">
+                    <span class="value" id="pulse-val">1.00</span>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="controls">
+                <button class="primary" id="btn-start">▶ START</button>
+                <button id="btn-form">🔷 FORM</button>
+                <button id="btn-grid">📐 GRID</button>
+                <button id="btn-axes">🎯 ACHSEN</button>
+                <button id="btn-reset">⟲ RESET</button>
+                <button id="btn-auto">▶ AUTO</button>
+            </div>
+
+            <!-- ORTE‑EVO‑Ausgabe -->
+            <div class="ort-output" id="ort-output">⏳ ORTE‑EVO wird geladen…</div>
+        </div>
+
+        <!-- ===== RECHTER BEREICH: EDITIERRAUM ===== -->
+        <div class="panel">
+            <h2>✏️ EDITIERRAUM · MODULE · PARAMETER</h2>
+
+            <!-- Module -->
+            <div class="module-grid" id="module-grid">
+                <div class="module-btn active" data-mod="CORE"><span class="sym">◆</span>CORE</div>
+                <div class="module-btn" data-mod="RESPO"><span class="sym">◈</span>RESPO</div>
+                <div class="module-btn" data-mod="FREQ"><span class="sym">〰️</span>FREQ</div>
+                <div class="module-btn" data-mod="Q"><span class="sym">◉</span>Q‑LAGE</div>
+                <div class="module-btn" data-mod="VERIFY"><span class="sym">✓</span>VERIFY</div>
+                <div class="module-btn" data-mod="BORE"><span class="sym">◎</span>BORE</div>
+                <div class="module-btn" data-mod="WIE"><span class="sym">❓</span>WIE</div>
+                <div class="module-btn" data-mod="MER"><span class="sym">🌊</span>MER</div>
+                <div class="module-btn" data-mod="IM"><span class="sym">🧬</span>IM</div>
+                <div class="module-btn" data-mod="ADD"><span class="sym">➕</span>ADD.room</div>
+                <div class="module-btn" data-mod="ID"><span class="sym">🆔</span>ID</div>
+                <div class="module-btn" data-mod="ORT"><span class="sym">📍</span>ORT</div>
+            </div>
+
+            <!-- Parameter-Editor -->
+            <div id="param-editor" style="background:#0e0e1a;border:1px solid #1a1a2a;border-radius:4px;padding:6px;margin:4px 0;font-size:9px;">
+                <div style="color:#666;font-size:7px;text-transform:uppercase;letter-spacing:1px;">📊 PARAMETER</div>
+                <div id="param-list">
+                    <div style="display:flex;justify-content:space-between;padding:2px 0;">
+                        <span style="color:#666;">d5</span>
+                        <span style="color:#ffd700;" id="param-d5">ORTE‑D5‑Achse‑EVO</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;padding:2px 0;">
+                        <span style="color:#666;">matrix</span>
+                        <span style="color:#ffd700;" id="param-matrix">6D‑Matrix‑EVO</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;padding:2px 0;">
+                        <span style="color:#666;">tmp</span>
+                        <span style="color:#ffd700;" id="param-tmp">TMP‑Konstellation‑EVO</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;padding:2px 0;">
+                        <span style="color:#666;">frame</span>
+                        <span style="color:#ffd700;" id="param-frame">ORTE‑EVO‑TARGET‑SCENE</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Edit-Feld -->
+            <div style="display:flex;gap:4px;margin:4px 0;">
+                <input type="text" id="edit-input" placeholder="Parametername ändern..." style="flex:1;background:#111;border:1px solid #333;color:#9cf;padding:4px 8px;border-radius:4px;font-family:inherit;font-size:9px;">
+                <button id="btn-edit" class="primary" style="font-size:9px;">✏️ EDIT</button>
+            </div>
+
+            <!-- Log -->
+            <div id="log">
+                <div class="entry"><span class="time">[INIT]</span> <span class="ok">ORTE‑EVO · Arbeitsplatz · Editierraum · Formraum</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <div class="footer">
+        <span>🧠</span> ORTE‑EVO · Arbeitsplatz · Editierraum · Formraum · Interaktiv · Programmierbar · <span>wieimmer4u</span>
+    </div>
+
 </div>
 
-<div id="penthouse">
-  <div class="panorama" id="panorama">
-    <div class="floor"></div>
-    <div class="freq-stream" id="freqStream"></div>
-    <div class="axis-6d"><div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div><div class="ring r4"></div></div>
-    <div class="scanner" id="scannerEl"></div>
-    <div class="ort-marker">◉</div>
-    <div class="tmp-rooms" id="tmpRooms"></div>
-  </div>
-</div>
-
-<div id="controls">
-  <button class="gold" id="btnReset">⟲ RESET</button>
-  <button id="btnRotate" class="active">⟳ ROTATE</button>
-  <button id="btnFreq">📡 FREQ</button>
-  <button id="btnScan">🔍 SCAN</button>
-  <button class="green" id="btnHelp">🆘 HELP</button>
-  <button class="red" id="btnError">⚠️ ERROR</button>
-  <button id="btnSense">👁️ SENSE</button>
-  <button id="btnWraight">✅ WRAIGHT</button>
-  <button class="gold" id="btnCoach">🧑‍🏫 COACH</button>
-  <button id="btnTmp">🌀 TMP</button>
-  <button id="btnFull">🔮 FULL</button>
-  <button class="mxu" id="btnMxu">⚡ MXU</button>
-  <button class="gold" id="btnPenth">🏠 PENTHOUSE</button>
-</div>
-
-<div id="status">
-  <span>🧠 <span id="agentStatus">bereit</span></span>
-  <span class="center">◉ <span id="centerInfo">RESPO.synthesis · GEO.TRANS</span></span>
-  <span class="right">SCORE: <span id="scoreVal">0</span> · TMP: <span id="tmpVal">12e</span></span>
-</div>
-
+<!-- ============================================================ -->
+<!-- SCRIPT – DAS KOMPLETTE ORTE‑EVO‑SYSTEM                        -->
+<!-- ============================================================ -->
 <script>
-// ============================================================
-// PENTHOUSE 6.0 · SCHALTEN & WALTEN
-// ============================================================
+// ================================================================
+// 1. ORTE‑EVO CORE
+// ================================================================
 
-// ===== STATE =====
-let state = {
-  rotate: true, freq: 12, scan: false, score: 0, angle: 0,
-  agent: 'bereit', wraight: '⏳', coach: 'bereit', mxu: 'SYNC'
+const ORTE_EVO = {
+    d5: "ORTE‑D5‑Achse‑EVO",
+    matrix: "6D‑Matrix‑EVO",
+    tmp: "TMP‑Konstellation‑EVO",
+    frame: "ORTE‑EVO‑TARGET‑SCENE",
+    module: "CORE",
+    rotX: 0,
+    rotY: 0,
+    scale: 1.0,
+    pulse: 1.0
 };
 
-// ===== DOM REFS =====
-const panorama = document.getElementById('panorama');
-const freqStream = document.getElementById('freqStream');
-const tmpRooms = document.getElementById('tmpRooms');
-const scannerEl = document.getElementById('scannerEl');
+// ================================================================
+// 2. MODULE
+// ================================================================
 
-// ===== TMP RÄUME =====
-const TMP_ROOMS = [
-  { id: "help.tmp", x: 8, y: 18, label: "🆘" },
-  { id: "error.tmp", x: 82, y: 22, label: "⚠️" },
-  { id: "sense.tmp", x: 42, y: 12, label: "👁️" },
-  { id: "wraight.tmp", x: 68, y: 72, label: "✅" },
-  { id: "coach.tmp", x: 22, y: 78, label: "🧑‍🏫" },
-  { id: "tmp.tmp", x: 52, y: 52, label: "🌀" },
-  { id: "push.tmp", x: 12, y: 48, label: "▶" },
-  { id: "flow.tmp", x: 78, y: 48, label: "~" },
-  { id: "spin.tmp", x: 48, y: 32, label: "⟳" },
-  { id: "root.tmp", x: 32, y: 62, label: "◈" }
-];
+const MODULES = {
+    CORE: { sym: '◆', label: 'CORE', color: '#ffd700' },
+    RESPO: { sym: '◈', label: 'RESPO', color: '#4f4' },
+    FREQ: { sym: '〰️', label: 'FREQ', color: '#4fc3f7' },
+    Q: { sym: '◉', label: 'Q‑LAGE', color: '#ff66ff' },
+    VERIFY: { sym: '✓', label: 'VERIFY', color: '#4f4' },
+    BORE: { sym: '◎', label: 'BORE', color: '#ff8c00' },
+    WIE: { sym: '❓', label: 'WIE', color: '#ffaa00' },
+    MER: { sym: '🌊', label: 'MER', color: '#00ccff' },
+    IM: { sym: '🧬', label: 'IM', color: '#ff66ff' },
+    ADD: { sym: '➕', label: 'ADD.room', color: '#ffd700' },
+    ID: { sym: '🆔', label: 'ID', color: '#9cf' },
+    ORT: { sym: '📍', label: 'ORT', color: '#6b6bff' }
+};
 
-function buildTmpRooms() {
-  tmpRooms.innerHTML = '';
-  TMP_ROOMS.forEach(room => {
-    const el = document.createElement('div');
-    el.className = 'tmp-room';
-    el.dataset.id = room.id;
-    el.style.left = room.x + '%';
-    el.style.top = room.y + '%';
-    el.textContent = room.label + ' ' + room.id;
-    el.onclick = () => {
-      state.score += 1;
-      document.getElementById('scoreVal').textContent = state.score;
-      el.classList.toggle('active');
-      const label = room.id.replace('.tmp','').toUpperCase();
-      document.getElementById('centerInfo').textContent = `📍 ${label} · aktiv`;
-    };
-    tmpRooms.appendChild(el);
-  });
-}
+// ================================================================
+// 3. STATE
+// ================================================================
 
-// ===== FREQ PARTICLES =====
-function buildFreqParticles() {
-  freqStream.innerHTML = '';
-  const count = 18 + Math.floor(Math.random() * 12);
-  const colors = ['#33ccff', '#ffdd00', '#ff66ff', '#88ff44'];
-  for (let i = 0; i < count; i++) {
-    const p = document.createElement('div');
-    p.className = 'freq-particle';
-    p.style.left = Math.random() * 100 + '%';
-    p.style.width = (2 + Math.random() * 3) + 'px';
-    p.style.height = p.style.width;
-    p.style.animationDuration = (3 + Math.random() * 3) + 's';
-    p.style.animationDelay = (Math.random() * 3) + 's';
-    p.style.background = colors[Math.floor(Math.random() * colors.length)];
-    p.style.boxShadow = `0 0 ${8 + Math.random() * 15}px ${p.style.background}`;
-    freqStream.appendChild(p);
-  }
+let running = true;
+let autoMode = false;
+let autoTimer = null;
+let currentModule = 'CORE';
+let time = 0;
+
+// ================================================================
+// 4. LOG
+// ================================================================
+
+function log(msg, type = 'ok') {
+    const logDiv = document.getElementById('log');
+    const entry = document.createElement('div');
+    entry.className = 'entry';
+    const time = new Date().toLocaleTimeString();
+    const cls = type === 'ok' ? 'ok' : type === 'warn' ? 'warn' : 'info';
+    entry.innerHTML = `<span class="time">[${time}]</span> <span class="${cls}">${msg}</span>`;
+    logDiv.appendChild(entry);
+    logDiv.scrollTop = logDiv.scrollHeight;
+    while (logDiv.children.length > 30) logDiv.removeChild(logDiv.firstChild);
 }
 
-// ===== ROTATE =====
-let rotateInterval = null;
-function startRotate() {
-  if (rotateInterval) clearInterval(rotateInterval);
-  let angle = 0;
-  rotateInterval = setInterval(() => {
-    if (state.rotate) { angle += 0.25; panorama.style.transform = `rotateX(5deg) rotateY(${angle}deg)`; }
-  }, 50);
+// ================================================================
+// 5. CANVAS
+// ================================================================
+
+const canvas = document.getElementById('formCanvas');
+const ctx = canvas.getContext('2d');
+let W, H, cx, cy, r;
+
+function resizeCanvas() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    const w = rect.width || 800;
+    const h = w * 0.625 || 500;
+    canvas.width = w;
+    canvas.height = h;
+    W = canvas.width;
+    H = canvas.height;
+    cx = W / 2;
+    cy = H / 2;
+    r = Math.min(W, H) * 0.35;
 }
-function toggleRotate() {
-  state.rotate = !state.rotate;
-  document.getElementById('btnRotate').classList.toggle('active');
-  document.getElementById('btnRotate').textContent = state.rotate ? '⟳ ROTATE' : '⏸ PAUSE';
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+// ================================================================
+// 6. DRAW – FORMMAUM
+// ================================================================
+
+function drawForm() {
+    ctx.clearRect(0, 0, W, H);
+
+    const rotX = ORTE_EVO.rotX * Math.PI / 180;
+    const rotY = ORTE_EVO.rotY * Math.PI / 180;
+    const scale = ORTE_EVO.scale;
+    const pulse = ORTE_EVO.pulse;
+    const color = MODULES[currentModule]?.color || '#ffd700';
+
+    // Hintergrund
+    ctx.fillStyle = '#0a0a12';
+    ctx.fillRect(0, 0, W, H);
+
+    // Grid
+    ctx.strokeStyle = 'rgba(255,255,255,0.03)';
+    ctx.lineWidth = 0.5;
+    const gridSize = 40;
+    for (let x = 0; x < W; x += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, H);
+        ctx.stroke();
+    }
+    for (let y = 0; y < H; y += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(W, y);
+        ctx.stroke();
+    }
+
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.scale(scale, scale);
+    ctx.rotate(rotX);
+    ctx.rotate(rotY);
+
+    // Hauptform – 6D‑Matrix
+    const baseR = r * 0.6;
+    const points = 12;
+    const pulseR = baseR * (0.7 + Math.sin(time / 1000) * 0.1 * pulse);
+
+    // 3D‑ähnliche Schichten
+    for (let layer = 0; layer < 3; layer++) {
+        const layerR = pulseR * (0.5 + layer * 0.25);
+        const offset = layer * 20;
+
+        ctx.beginPath();
+        for (let i = 0; i < points; i++) {
+            const angle = (i / points) * Math.PI * 2 + time / 2000 + layer * 0.5;
+            const px = Math.cos(angle) * layerR;
+            const py = Math.sin(angle) * layerR + offset * 0.5;
+            if (i === 0) ctx.moveTo(px, py);
+            else ctx.lineTo(px, py);
+        }
+        ctx.closePath();
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 2 - layer * 0.4;
+        ctx.globalAlpha = 0.8 - layer * 0.2;
+        ctx.stroke();
+
+        // Punkte
+        for (let i = 0; i < points; i++) {
+            const angle = (i / points) * Math.PI * 2 + time / 2000 + layer * 0.5;
+            const px = Math.cos(angle) * layerR;
+            const py = Math.sin(angle) * layerR + offset * 0.5;
+            ctx.beginPath();
+            ctx.arc(px, py, 3 + pulse * 0.5, 0, Math.PI * 2);
+            ctx.fillStyle = color;
+            ctx.globalAlpha = 0.6 + Math.sin(time / 500 + i) * 0.2;
+            ctx.fill();
+        }
+    }
+
+    // D5‑Achse (zentrale Linie)
+    ctx.globalAlpha = 0.3;
+    ctx.strokeStyle = '#ffd700';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([4, 8]);
+    ctx.beginPath();
+    ctx.moveTo(-r * 0.8, 0);
+    ctx.lineTo(r * 0.8, 0);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(0, -r * 0.8);
+    ctx.lineTo(0, r * 0.8);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Mitte
+    ctx.globalAlpha = 1;
+    ctx.beginPath();
+    ctx.arc(0, 0, 6 + pulse * 2, 0, Math.PI * 2);
+    ctx.fillStyle = '#ffd700';
+    ctx.shadowColor = '#ffd700';
+    ctx.shadowBlur = 20;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+
+    // Label
+    ctx.globalAlpha = 0.5;
+    ctx.fillStyle = '#666';
+    ctx.font = '10px monospace';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    ctx.fillText(ORTE_EVO.frame, 0, r * 0.7 + 10);
+
+    ctx.restore();
+
+    // Modus
+    ctx.fillStyle = '#445555';
+    ctx.font = '9px monospace';
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'bottom';
+    ctx.fillText(`🔄 ${currentModule} · rotX ${Math.round(ORTE_EVO.rotX)}° · rotY ${Math.round(ORTE_EVO.rotY)}°`, 10, H - 6);
+
+    // Parameter
+    ctx.textAlign = 'right';
+    ctx.fillText(`📐 ${ORTE_EVO.d5}`, W - 10, H - 6);
 }
 
-// ===== SET FUNCTIONS =====
-function setAgentStatus(s) { state.agent = s; document.getElementById('agentStatus').textContent = s; }
-function setWraight(s) { state.wraight = s; document.getElementById('wraightStatus') ? document.getElementById('wraightStatus').textContent = s : null; }
-function setCoach(s) { state.coach = s; document.getElementById('coachStatus') ? document.getElementById('coachStatus').textContent = s : null; }
-function setCenterInfo(t) { document.getElementById('centerInfo').textContent = t; }
-function setRespoStatus(s) { document.getElementById('respoStatus').textContent = s; }
+// ================================================================
+// 7. UPDATE ORTE‑EVO
+// ================================================================
 
-// ===== HSF MODULES =====
-function runHelp() {
-  setAgentStatus('HELP'); setCenterInfo('🆘 HELP · Soforthilfe aktiv');
-  setRespoStatus('help');
-  document.querySelectorAll('.tmp-room').forEach(el => el.classList.remove('active'));
-  document.querySelector('.tmp-room[data-id="help.tmp"]')?.classList.add('active');
-  scannerEl.style.borderColor = '#88ff44';
-  scannerEl.style.boxShadow = '0 0 40px rgba(136,255,68,0.2)';
-}
-function runError() {
-  setAgentStatus('ERROR'); setCenterInfo('⚠️ ERROR · Keine Fehler');
-  setRespoStatus('error');
-  document.querySelectorAll('.tmp-room').forEach(el => el.classList.remove('active'));
-  document.querySelector('.tmp-room[data-id="error.tmp"]')?.classList.add('active');
-  scannerEl.style.borderColor = '#ff4444';
-  scannerEl.style.boxShadow = '0 0 40px rgba(255,68,68,0.2)';
-}
-function runSense() {
-  const score = (0.6 + Math.random() * 0.4).toFixed(2);
-  setAgentStatus('SENSE'); setCenterInfo(`👁️ 7SENSE · ${score} · ${score > 0.7 ? 'klar' : 'unscharf'}`);
-  setRespoStatus('sense');
-  document.querySelectorAll('.tmp-room').forEach(el => el.classList.remove('active'));
-  document.querySelector('.tmp-room[data-id="sense.tmp"]')?.classList.add('active');
-  scannerEl.style.borderColor = '#ffdd00';
-  scannerEl.style.boxShadow = '0 0 40px rgba(255,221,0,0.2)';
-}
-function runWraight() {
-  const erlaubt = Math.random() > 0.25;
-  setWraight(erlaubt ? '✅ GRÜN' : '⛔ ROT');
-  setAgentStatus('WRAIGHT');
-  setCenterInfo(`✅ WRAIGHT · ${erlaubt ? 'GRÜN – Zugang erlaubt' : 'ROT – Zugang blockiert'}`);
-  setRespoStatus('wraight');
-  document.querySelectorAll('.tmp-room').forEach(el => el.classList.remove('active'));
-  document.querySelector('.tmp-room[data-id="wraight.tmp"]')?.classList.add('active');
-  scannerEl.style.borderColor = erlaubt ? '#88ff44' : '#ff4444';
-  scannerEl.style.boxShadow = erlaubt ? '0 0 40px rgba(136,255,68,0.2)' : '0 0 40px rgba(255,68,68,0.2)';
-  return erlaubt;
-}
-function runCoach() {
-  const erlaubt = runWraight();
-  if (!erlaubt) {
-    setCoach('blockiert'); setCenterInfo('🧑‍🏫 COACH blockiert · WRAIGHT ist ROT');
-    return;
-  }
-  setCoach('aktiv'); setAgentStatus('COACH');
-  setCenterInfo('🧑‍🏫 COACH · führend · ich werde nicht geführt');
-  setRespoStatus('coach');
-  document.querySelectorAll('.tmp-room').forEach(el => el.classList.remove('active'));
-  document.querySelector('.tmp-room[data-id="coach.tmp"]')?.classList.add('active');
-  scannerEl.style.borderColor = '#ffdd00';
-  scannerEl.style.boxShadow = '0 0 40px rgba(255,221,0,0.2)';
-}
-function runTmp() {
-  setAgentStatus('TMP'); setCenterInfo('🌀 TMP · Temporäre Brücke · Durchfluss stabil');
-  setRespoStatus('tmp');
-  document.querySelectorAll('.tmp-room').forEach(el => el.classList.remove('active'));
-  document.querySelector('.tmp-room[data-id="tmp.tmp"]')?.classList.add('active');
-  scannerEl.style.borderColor = '#33ccff';
-  scannerEl.style.boxShadow = '0 0 40px rgba(51,204,255,0.2)';
-}
-function runFull() {
-  const erlaubt = runWraight();
-  setAgentStatus('FULL');
-  setCenterInfo(`🔮 VOLLSCHALTUNG · ${erlaubt ? '✅ System aktiv' : '⛔ System blockiert'}`);
-  setRespoStatus('full');
-  document.querySelectorAll('.tmp-room').forEach(el => el.classList.add('active'));
-  scannerEl.style.borderColor = '#ffdd00';
-  scannerEl.style.boxShadow = '0 0 60px rgba(255,221,0,0.3)';
-  scannerEl.style.animation = 'scannerPulse 1s ease-in-out infinite';
+function updateORTE() {
+    const output = document.getElementById('ort-output');
+    output.textContent = JSON.stringify(ORTE_EVO, null, 2);
 }
 
-// ===== MXU =====
-let mxuCycle = 0;
-const MXU_MODES = ['SYNC', 'OS', 'BOOT', 'CORE', 'META'];
-function runMxu() {
-  mxuCycle = (mxuCycle + 1) % MXU_MODES.length;
-  const mode = MXU_MODES[mxuCycle];
-  state.mxu = mode;
-  document.getElementById('mxuDisplay').textContent = mode;
-  setCenterInfo(`⚡ MXU · ${mode} · Achsen aktiv`);
-  setRespoStatus('mxu');
-  document.querySelectorAll('.tmp-room').forEach(el => el.classList.remove('active'));
-  const colors = { SYNC: '#88ff44', OS: '#ff4444', BOOT: '#ff8c00', CORE: '#00ccff', META: '#ff66ff' };
-  scannerEl.style.borderColor = colors[mode] || '#33ccff';
-  scannerEl.style.boxShadow = `0 0 40px ${colors[mode] || '#33ccff'}33`;
+function updateParams() {
+    document.getElementById('param-d5').textContent = ORTE_EVO.d5;
+    document.getElementById('param-matrix').textContent = ORTE_EVO.matrix;
+    document.getElementById('param-tmp').textContent = ORTE_EVO.tmp;
+    document.getElementById('param-frame').textContent = ORTE_EVO.frame;
 }
 
-// ===== PENTHOUSE =====
-function goPenthouse() {
-  document.getElementById('btnPenth').classList.toggle('active');
-  document.querySelector('.ort-marker').style.animation = 'none';
-  setTimeout(() => {
-    document.querySelector('.ort-marker').style.animation = 'markerPulse 2s ease-in-out infinite';
-  }, 10);
-  setCenterInfo('🏠 PENTHOUSE · 360°');
+// ================================================================
+// 8. ANIMATION
+// ================================================================
+
+function animate() {
+    if (!running) return;
+    time += 16;
+    drawForm();
+    requestAnimationFrame(animate);
 }
 
-// ===== RESET =====
-function runReset() {
-  state.score = 0; document.getElementById('scoreVal').textContent = '0';
-  setAgentStatus('bereit'); setWraight('⏳'); setCoach('bereit');
-  setCenterInfo('⟲ RESET · System zurückgesetzt');
-  setRespoStatus('synthesis');
-  document.querySelectorAll('.tmp-room').forEach(el => el.classList.remove('active'));
-  scannerEl.style.borderColor = 'rgba(51,204,255,0.1)';
-  scannerEl.style.boxShadow = 'none';
-  scannerEl.style.animation = 'scannerPulse 3s ease-in-out infinite';
-  state.mxu = 'SYNC';
-  document.getElementById('mxuDisplay').textContent = 'SYNC';
-}
+// ================================================================
+// 9. CONTROLS
+// ================================================================
 
-// ===== FREQ =====
-function toggleFreq() {
-  state.freq = state.freq === 12 ? 24 : 12;
-  document.getElementById('btnFreq').classList.toggle('active');
-  document.getElementById('freqDisplay').textContent = state.freq + 'e';
-  document.getElementById('tmpVal').textContent = state.freq + 'e';
-  buildFreqParticles();
-}
-
-// ===== SCAN =====
-function toggleScan() {
-  state.scan = !state.scan;
-  document.getElementById('btnScan').classList.toggle('active');
-  if (state.scan) {
-    scannerEl.style.borderColor = 'rgba(255,221,0,0.5)';
-    scannerEl.style.boxShadow = '0 0 60px rgba(255,221,0,0.15)';
-    document.getElementById('btnScan').textContent = '🔍 SCAN·ON';
-    setRespoStatus('scanning');
-    setCenterInfo('🔍 SCAN · aktiv');
-  } else {
-    scannerEl.style.borderColor = 'rgba(51,204,255,0.1)';
-    scannerEl.style.boxShadow = 'none';
-    document.getElementById('btnScan').textContent = '🔍 SCAN';
-    setRespoStatus('synthesis');
-    setCenterInfo('RESPO.synthesis · GEO.TRANS');
-  }
-}
-
-// ===== CONTROLS =====
-document.getElementById('btnReset').onclick = runReset;
-document.getElementById('btnRotate').onclick = toggleRotate;
-document.getElementById('btnFreq').onclick = toggleFreq;
-document.getElementById('btnScan').onclick = toggleScan;
-document.getElementById('btnHelp').onclick = runHelp;
-document.getElementById('btnError').onclick = runError;
-document.getElementById('btnSense').onclick = runSense;
-document.getElementById('btnWraight').onclick = runWraight;
-document.getElementById('btnCoach').onclick = runCoach;
-document.getElementById('btnTmp').onclick = runTmp;
-document.getElementById('btnFull').onclick = runFull;
-document.getElementById('btnMxu').onclick = runMxu;
-document.getElementById('btnPenth').onclick = goPenthouse;
-
-// ===== TASTATUR =====
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'r' || e.key === 'R') runReset();
-  if (e.key === ' ') { e.preventDefault(); toggleRotate(); }
-  if (e.key === 'f' || e.key === 'F') toggleFreq();
-  if (e.key === 's' || e.key === 'S') toggleScan();
-  if (e.key === 'h' || e.key === 'H') runHelp();
-  if (e.key === 'e' || e.key === 'E') runError();
-  if (e.key === 'w' || e.key === 'W') runWraight();
-  if (e.key === 'c' || e.key === 'C') runCoach();
-  if (e.key === 't' || e.key === 'T') runTmp();
-  if (e.key === 'f' || e.key === 'F') runFull();
-  if (e.key === 'm' || e.key === 'M') runMxu();
-  if (e.key === 'p' || e.key === 'P') goPenthouse();
+// Slider
+document.getElementById('rotX').addEventListener('input', function() {
+    ORTE_EVO.rotX = Number(this.value);
+    document.getElementById('rotX-val').textContent = Math.round(this.value) + '°';
 });
 
-// ===== SCORE AUTO =====
-function updateScore() {
-  state.score += 0.02;
-  document.getElementById('scoreVal').textContent = Math.floor(state.score);
-  requestAnimationFrame(updateScore);
+document.getElementById('rotY').addEventListener('input', function() {
+    ORTE_EVO.rotY = Number(this.value);
+    document.getElementById('rotY-val').textContent = Math.round(this.value) + '°';
+});
+
+document.getElementById('scale').addEventListener('input', function() {
+    ORTE_EVO.scale = Number(this.value);
+    document.getElementById('scale-val').textContent = this.value;
+});
+
+document.getElementById('pulse').addEventListener('input', function() {
+    ORTE_EVO.pulse = Number(this.value);
+    document.getElementById('pulse-val').textContent = this.value;
+});
+
+// Buttons
+document.getElementById('btn-start').addEventListener('click', function() {
+    running = !running;
+    this.textContent = running ? '⏸ PAUSE' : '▶ START';
+    log(running ? '▶ START' : '⏸ PAUSE', 'info');
+    if (running) animate();
+});
+
+document.getElementById('btn-form').addEventListener('click', function() {
+    ORTE_EVO.frame = 'FORM-MODE-' + Date.now().toString().slice(-4);
+    log('🔷 FORM gewechselt: ' + ORTE_EVO.frame, 'info');
+    updateParams();
+    updateORTE();
+});
+
+document.getElementById('btn-grid').addEventListener('click', function() {
+    log('📐 GRID toggled', 'info');
+});
+
+document.getElementById('btn-axes').addEventListener('click', function() {
+    ORTE_EVO.d5 = 'AXIS-' + (Math.random() * 360).toFixed(0) + '°';
+    log('🎯 ACHSEN aktualisiert: ' + ORTE_EVO.d5, 'info');
+    updateParams();
+    updateORTE();
+});
+
+document.getElementById('btn-reset').addEventListener('click', function() {
+    ORTE_EVO.rotX = 0;
+    ORTE_EVO.rotY = 0;
+    ORTE_EVO.scale = 1;
+    ORTE_EVO.pulse = 1;
+    document.getElementById('rotX').value = 0;
+    document.getElementById('rotY').value = 0;
+    document.getElementById('scale').value = 1;
+    document.getElementById('pulse').value = 1;
+    document.getElementById('rotX-val').textContent = '0°';
+    document.getElementById('rotY-val').textContent = '0°';
+    document.getElementById('scale-val').textContent = '1.00';
+    document.getElementById('pulse-val').textContent = '1.00';
+    log('⟲ RESET', 'warn');
+    updateParams();
+    updateORTE();
+});
+
+document.getElementById('btn-auto').addEventListener('click', function() {
+    autoMode = !autoMode;
+    this.textContent = autoMode ? '⏸ PAUSE' : '▶ AUTO';
+    if (autoMode) {
+        log('▶ AUTO gestartet', 'info');
+        autoTimer = setInterval(() => {
+            const mods = Object.keys(MODULES);
+            const idx = mods.indexOf(currentModule);
+            const next = mods[(idx + 1) % mods.length];
+            setModule(next);
+        }, 3000);
+    } else {
+        clearInterval(autoTimer);
+        autoTimer = null;
+        log('⏸ AUTO pausiert', 'warn');
+    }
+});
+
+// Module
+function setModule(mod) {
+    currentModule = mod;
+    ORTE_EVO.module = mod;
+    document.querySelectorAll('.module-btn').forEach(el => {
+        el.classList.toggle('active', el.dataset.mod === mod);
+    });
+    log('📦 MODUL: ' + mod, 'info');
+    updateORTE();
 }
 
-// ===== INIT =====
-buildTmpRooms();
-buildFreqParticles();
-startRotate();
-updateScore();
-setCenterInfo('🏠 PENTHOUSE 6.0 · SCHALTEN & WALTEN · bereit');
-console.log('🏠 PENTHOUSE 6.0 · SCHALTEN & WALTEN · geladen');
-console.log('⌨️  h=HELP e=ERROR w=WRAIGHT c=COACH t=TMP f=FULL m=MXU');
-console.log('    Space=Rotate f=Freq s=Scan r=Reset p=Penthouse');
-</script>
-<script type="module">
-import { ORT } from "./boot.js";
-ORT.boot();
-</script>
-<div id="ort-nav"></div>
-<script type="module">
-import { ORT_NAV } from "../nav.js";
-ORT_NAV();
+document.querySelectorAll('.module-btn').forEach(el => {
+    el.addEventListener('click', function() {
+        setModule(this.dataset.mod);
+    });
+});
+
+// Edit
+document.getElementById('btn-edit').addEventListener('click', function() {
+    const input = document.getElementById('edit-input');
+    const parts = input.value.split('=');
+    if (parts.length === 2) {
+        const key = parts[0].trim();
+        const val = parts[1].trim();
+        if (key in ORTE_EVO) {
+            ORTE_EVO[key] = val;
+            log(`✏️ EDIT: ${key} = ${val}`, 'info');
+            updateParams();
+            updateORTE();
+        } else {
+            log(`❌ ${key} existiert nicht`, 'warn');
+        }
+    } else {
+        log('⚠️ Format: key=value', 'warn');
+    }
+    input.value = '';
+});
+
+// ================================================================
+// 10. TASTATUR
+// ================================================================
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === ' ') { e.preventDefault(); document.getElementById('btn-start').click(); }
+    if (e.key === 'r' || e.key === 'R') document.getElementById('btn-reset').click();
+    if (e.key === 'a' || e.key === 'A') document.getElementById('btn-auto').click();
+    if (e.key === 'f' || e.key === 'F') document.getElementById('btn-form').click();
+    if (e.key === 'g' || e.key === 'G') document.getElementById('btn-grid').click();
+    if (e.key === 'x' || e.key === 'X') document.getElementById('btn-axes').click();
+    if (e.key === 'Enter' && document.activeElement === document.getElementById('edit-input')) {
+        document.getElementById('btn-edit').click();
+    }
+});
+
+// ================================================================
+// 11. INIT
+// ================================================================
+
+updateParams();
+updateORTE();
+animate();
+log('🧠 ORTE‑EVO · Arbeitsplatz · Editierraum · Formraum', 'ok');
+log('⌨️  space=Start  r=Reset  a=Auto  f=Form  g=Grid  x=Achsen  Enter=Edit', 'info');
+
+console.log('🧠 ORTE‑EVO · Arbeitsplatz · Editierraum · Formraum');
+console.log('⌨️  space=Start  r=Reset  a=Auto  f=Form  g=Grid  x=Achsen  Enter=Edit');
+console.log('📦 Module: CORE, RESPO, FREQ, Q, VERIFY, BORE, WIE, MER, IM, ADD, ID, ORT');
 </script>
 
 </body>
